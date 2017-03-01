@@ -2,6 +2,7 @@
 distinguished_name     = req_distinguished_name
 prompt                 = no
 attributes             = req_attributes
+req_extensions         = v3_req
 
 [ req_distinguished_name ]
 C                      = GB
@@ -15,3 +16,57 @@ emailAddress           = test.stackato@hpe.com
 [ req_attributes ]
 challengePassword              = EMPTY
 unstructuredName               = EMPTY
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = localhost
+DNS.2 = jbramary.gbr.hp.com
+IP.1 = 16.27.44.52
+
+[ ca ]
+default_ca  = CA_default        # The default ca section
+
+[ CA_default ]
+x509_extensions = server_cert_extensions
+copy_extensions = copy
+dir             = .                     # Where everything is kept
+certs           = $dir/certsdb          # Where the issued certs are kept
+new_certs_dir   = $certs                # default place for new certs.
+database        = $dir/index.txt        # database index file.
+certificate     = $dir/stackatoCA.pem   # The CA certificate
+private_key     = $dir/stackatoCA.key   # The private key
+serial          = $dir/serial           # The current serial number
+RANDFILE        = $dir/private/.rand    # private random number file
+
+default_days    = 365                   # how long to certify for
+default_crl_days= 30                    # how long before next CRL
+default_md      = sha256                 # which md to use.
+preserve        = no                    # keep passed DN ordering
+
+# A few difference way of specifying how similar the request should look
+# For type CA, the listed attributes must be the same, and the optional
+# and supplied fields are just that :-)
+policy          = policy_match
+
+####################################################################
+# The default policy for the CA when signing requests, requires some
+# resemblence to the CA cert
+#
+[ policy_match ]
+countryName             = match         # Must be the same as the CA
+stateOrProvinceName     = match         # Must be the same as the CA
+organizationName        = match         # Must be the same as the CA
+organizationalUnitName  = optional      # not required
+commonName              = supplied      # must be there, whatever it is
+emailAddress            = optional      # not required
+
+[ server_cert_extensions ]
+basicConstraints = CA:FALSE
+nsCertType = server
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer:always
+issuerAltName = issuer:copy

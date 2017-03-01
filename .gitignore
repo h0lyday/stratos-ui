@@ -19,3 +19,7 @@ oem/scss
 oem/tmp
 tmp
 coverage-report
+tools/ssl/index*
+tools/ssl/serial*
+containers/nginx/certs/*.key
+containers/nginx/certs/*.crt
