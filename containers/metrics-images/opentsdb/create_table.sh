@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/with-contenv bash
 # Small script to setup the HBase tables used by OpenTSDB.
 
 test -n "$HBASE_HOME" || {
@@ -38,7 +38,7 @@ create '$UID_TABLE',
   {NAME => 'name', COMPRESSION => '$COMPRESSION', BLOOMFILTER => '$BLOOMFILTER'}
 
 create '$TSDB_TABLE',
-  {NAME => 't', VERSIONS => 1, COMPRESSION => '$COMPRESSION', BLOOMFILTER => '$BLOOMFILTER', TTL => ::TSDB_TABLE_TTL::}
+  {NAME => 't', VERSIONS => 1, COMPRESSION => '$COMPRESSION', BLOOMFILTER => '$BLOOMFILTER', TTL => $TSDB_TABLE_TTL}
 
 create '$TREE_TABLE',
   {NAME => 't', VERSIONS => 1, COMPRESSION => '$COMPRESSION', BLOOMFILTER => '$BLOOMFILTER'}
