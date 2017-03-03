@@ -104,7 +104,6 @@
                 that.nodes[key].metrics.memoryUtilization = null;
                 that.nodes[key].metrics.memoryLimit = null;
                 that.nodes[key].metrics.memoryUsage = null;
-                that.all.metrics.memoryUsage = null;
               });
 
             allMetricPromises.push(promises);
@@ -115,6 +114,8 @@
             that.metricsModel.makeNodeNameFilter('*'))
             .then(function (metric) {
               that.all.metrics.memoryUsage = metric;
+            }).catch(function () {
+              that.all.metrics.memoryUsage = null;
             });
           allMetricPromises.push(allPromises);
 
@@ -137,7 +138,7 @@
     },
 
     getGaugeValueText: function (node) {
-      if (node.metrics.memoryUtilization && node.metrics.memoryUtilization.latestDataPoint) {
+      if (_.has(node, 'metrics.memoryUtilization.latestDataPoint')) {
         return this.getMemoryUsageValue(node) + '/' + this.fetchMemoryLimit(node);
       }
       return 'N/A';

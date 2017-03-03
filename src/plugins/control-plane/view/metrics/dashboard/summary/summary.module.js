@@ -170,14 +170,14 @@
       return Math.ceil(parseFloat(node.metrics.cpuUtilization.latestDataPoint) * node.metrics.cpuLimit);
     },
     getCpuGaugeValueText: function (node) {
-      if (node.metrics.cpuUtilization && node.metrics.cpuUtilization.latestDataPoint) {
+      if (_.has(node, 'metrics.cpuUtilization.latestDataPoint')) {
         return this.getCpuUsageValue(node) + ' MC/' + this.getCpuLimit(node);
       }
       return 'N/A';
     },
 
     getMemGaugeValueText: function (node) {
-      if (node.metrics.memoryUtilization && node.metrics.memoryUtilization.latestDataPoint) {
+      if (_.has(node, 'metrics.memoryUtilization.latestDataPoint')) {
         return this.getMemoryUsageValue(node) + '/' + this.fetchMemoryLimit(node);
       }
       return 'N/A';

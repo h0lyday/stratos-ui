@@ -133,7 +133,7 @@
     },
 
     getGaugeValueText: function (node) {
-      if (node.metrics.cpuUtilization && node.metrics.cpuUtilization.latestDataPoint) {
+      if (_.has(node, 'metrics.cpuUtilization.latestDataPoint')) {
         return this.getCpuUsageValue(node) + 'MC/' + this.fetchCpuLimit(node) + ' MC';
       }
       return 'N/A';
