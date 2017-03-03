@@ -27,6 +27,9 @@ case $COMPRESSION in
     ;;
 esac
 
+# Default to 1 week
+TSDB_TABLE_TTL=${TSDB_TABLE_TTL-'604800'}
+
 # HBase scripts also use a variable named `HBASE_HOME', and having this
 # variable in the environment with a value somewhat different from what
 # they expect can confuse them in some cases.  So rename the variable.
