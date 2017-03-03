@@ -72,7 +72,7 @@
               <td>
                 <percent-gauge
                   value="{{ node.metrics.cpuUtilization.latestDataPoint }}"
-                  value-text="{{ cpuSummaryCtrl.getCpuUsageValue(node) }} MC / {{ node.metrics.cpuLimit }} MC">
+                  value-text="{{ cpuSummaryCtrl.getGaugeValueText(node) }}">
                 </percent-gauge>
               </td>
               <td>

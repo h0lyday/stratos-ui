@@ -6,12 +6,11 @@
     .factory('control-plane.metrics.metrics-data-service', metricsDataServiceFactory);
 
   metricsDataServiceFactory.$inject = [
-    'app.event.eventService',
     'app.model.modelManager',
     'app.utils.utilsService'
   ];
 
-  function metricsDataServiceFactory(eventService, modelManager, utilsService) {
+  function metricsDataServiceFactory(modelManager, utilsService) {
 
     // model information
     var model = modelManager.retrieve('control-plane.model.application');

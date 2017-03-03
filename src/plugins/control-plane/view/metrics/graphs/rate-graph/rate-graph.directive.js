@@ -21,14 +21,13 @@
   }
 
   RateChartController.$inject = [
-    '$interval',
     '$scope',
     'app.model.modelManager',
     'app.utils.utilsService',
     'control-plane.metrics.metrics-data-service'
   ];
 
-  function RateChartController($interval, $scope, modelManager, utilsService, metricsDataService) {
+  function RateChartController($scope, modelManager, utilsService, metricsDataService) {
 
     var that = this;
 

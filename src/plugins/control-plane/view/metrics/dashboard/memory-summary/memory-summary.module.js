@@ -134,6 +134,13 @@
 
     fetchMemoryLimit: function (node) {
       return this.utilsService.bytesToHumanSize(node.metrics.memoryLimit);
+    },
+
+    getGaugeValueText: function (node) {
+      if (node.metrics.memoryUtilization && node.metrics.memoryUtilization.latestDataPoint) {
+        return this.getMemoryUsageValue(node) + '/' + this.fetchMemoryLimit(node);
+      }
+      return 'N/A';
     }
   });
 

@@ -58,7 +58,7 @@
               <td>
                 <percent-gauge
                   value="{{ node.metrics.memoryUtilization.latestDataPoint }}"
-                  value-text="{{ memorySummaryCtrl.getMemoryUsageValue(node) }} / {{ memorySummaryCtrl.fetchMemoryLimit(node) }}">
+                  value-text="{{ memorySummaryCtrl.getGaugeValueText(node) }}">
                 </percent-gauge>
 
               </td>

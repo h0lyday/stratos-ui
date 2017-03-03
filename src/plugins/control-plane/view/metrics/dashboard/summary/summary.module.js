@@ -162,9 +162,25 @@
     fetchMemoryLimit: function (node) {
       return this.utilsService.bytesToHumanSize(node.metrics.memoryLimit);
     },
+    getCpuLimit: function (node) {
+      return node.metrics.cpuLimit;
+    },
 
     getCpuUsageValue: function (node) {
       return Math.ceil(parseFloat(node.metrics.cpuUtilization.latestDataPoint) * node.metrics.cpuLimit);
+    },
+    getCpuGaugeValueText: function (node) {
+      if (node.metrics.cpuUtilization && node.metrics.cpuUtilization.latestDataPoint) {
+        return this.getCpuUsageValue(node) + ' MC/' + this.getCpuLimit(node);
+      }
+      return 'N/A';
+    },
+
+    getMemGaugeValueText: function (node) {
+      if (node.metrics.memoryUtilization && node.metrics.memoryUtilization.latestDataPoint) {
+        return this.getMemoryUsageValue(node) + '/' + this.fetchMemoryLimit(node);
+      }
+      return 'N/A';
     }
 
   });

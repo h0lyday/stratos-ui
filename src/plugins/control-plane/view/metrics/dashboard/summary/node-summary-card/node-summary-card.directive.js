@@ -29,9 +29,6 @@
 
     this.metricsModel = modelManager.retrieve('control-plane.model.metrics');
     this.utilsService = utilsService;
-    this.metricsData = {};
-    this.cpuLimit = 0;
-    this.memoryLimit = 0;
 
     this.nodeName = this.node.spec.hostname;
     this.metricsNodeName = this.node.spec.metricsNodeName;

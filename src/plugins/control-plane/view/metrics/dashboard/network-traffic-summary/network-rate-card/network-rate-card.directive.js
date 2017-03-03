@@ -57,14 +57,6 @@
 
     yTickFormatter: function (d) {
       return d;
-    },
-
-    getLatestPoint: function (metric) {
-      if (metric) {
-        return this.utilsService.bytesToHumanSize(_.last(metric.dataPoints).y) + '/s';
-      }
-      return null;
-
     }
 
   });

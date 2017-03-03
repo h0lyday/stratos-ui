@@ -130,6 +130,13 @@
 
     fetchCpuLimit: function (node) {
       return node.metrics.cpuLimit;
+    },
+
+    getGaugeValueText: function (node) {
+      if (node.metrics.cpuUtilization && node.metrics.cpuUtilization.latestDataPoint) {
+        return this.getCpuUsageValue(node) + 'MC/' + this.fetchCpuLimit(node) + ' MC';
+      }
+      return 'N/A';
     }
   });
 

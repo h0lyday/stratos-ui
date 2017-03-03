@@ -40,7 +40,6 @@
 
     function init() {
       that.nodes = metricsDataService.getNodes(that.guid);
-
       return $q.resolve();
     }
 

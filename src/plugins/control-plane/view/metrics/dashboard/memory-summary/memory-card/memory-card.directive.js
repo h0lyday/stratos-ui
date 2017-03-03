@@ -31,7 +31,6 @@
 
   function MemoryCardController($state, $q, modelManager, utilsService) {
 
-    var that = this;
     this.metricsModel = modelManager.retrieve('control-plane.model.metrics');
     this.$state = $state;
     this.utilsService = utilsService;

@@ -20,17 +20,12 @@
   }
 
   SparklineGraphController.$inject = [
-    '$interval',
-    '$scope',
     'app.model.modelManager'
   ];
 
-  function SparklineGraphController($interval, $scope, modelManager) {
-
-    //var that = this;
+  function SparklineGraphController(modelManager) {
 
     this.metricsModel = modelManager.retrieve('control-plane.model.metrics');
-
 
     this.options = {
       chart: {
