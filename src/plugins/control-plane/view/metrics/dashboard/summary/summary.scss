@@ -1,6 +1,7 @@
 @import "node-summary-card/node-summary-card";
 @import "node-count-card/node-count-card";
-@include tile-layout('cards-view', 400px, 5);
+
+@include tile-layout('cards-view', 445px, 5);
 
 .hcp-summary {
   .row:first-of-type {
