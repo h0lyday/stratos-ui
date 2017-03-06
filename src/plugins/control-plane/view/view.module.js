@@ -60,6 +60,12 @@
             }
           });
 
+          if (connectedInstances === 0) {
+            // Redirect user to endpoints page
+            $state.go('endpoint.dashboard');
+            return;
+          }
+
           if (connectedInstances === 1) {
             $state.go('cp.metrics.dashboard.summary', {guid: serviceInstanceGuid});
           } else {
