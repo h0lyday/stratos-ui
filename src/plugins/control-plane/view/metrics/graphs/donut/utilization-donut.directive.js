@@ -64,13 +64,6 @@
         donutRatio: 0.99,
         showLabels: false,
         showLegend: this.noLegend !== 'true',
-        dispatch: {
-          renderEnd: function () {
-            if (that.value) {
-              that._addTitle();
-            }
-          }
-        },
         x: function (d) {
           return d.label;
         },
@@ -84,6 +77,13 @@
           left: 0
         },
         pie: {
+          dispatch: {
+            renderEnd: function () {
+              if (!_.isUndefined(that.value) && !_.isNull(that.value)) {
+                that._addTitle();
+              }
+            }
+          },
           startAngle: function (d) {
             if (d.data.idle) {
               return d.startAngle * 0.75 - Math.PI * 0.75;
@@ -146,7 +146,6 @@
           color: idleColor || idleElement.color,
           idle: true
         }];
-      this.chartApi && this.chartApi.refresh();
     },
 
     _addTitle: function () {
@@ -160,7 +159,7 @@
         cssClass = 'critical-title';
       }
 
-      var svg = d3.select('#' + this.metric + '_' + this.utilsService.sanitizeString(this.nodeName) + '_dnt');
+      var svg = d3.select(this.chartApi.getElement().get(0));
       var donut = svg.selectAll('g.nv-pie').filter(
         function (d, i) {
           return i === 1;
