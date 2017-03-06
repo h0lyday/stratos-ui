@@ -27,6 +27,11 @@ case $COMPRESSION in
     ;;
 esac
 
+# Set the environment variable for the TTL if the file for it exists
+if [ -f /opt/opentsdb/tsdb_table_ttl ]; then
+  source /opt/opentsdb/tsdb_table_ttl
+fi
+
 # Default to 1 week
 TSDB_TABLE_TTL=${TSDB_TABLE_TTL-'604800'}
 

@@ -8,3 +8,8 @@ RUN echo "tsd.http.request.max_chunk = 40960" >> /etc/opentsdb.conf
 # Replace the create_table.sh script to allow overriding the Time-to-live for the tsdb table
 ADD create_table.sh /opt/opentsdb/opentsdb-${TSDB_VERSION}/src/create_table.sh
 RUN sed -i 's@#!/bin/bash@#!/usr/bin/with-contenv bash@' /opt/bin/create_tsdb_tables.sh
+
+ADD console-start-opentsdb.sh /opt/opentsdb/console-start-opentsdb.sh
+RUN chmod +x /opt/opentsdb/console-start-opentsdb.sh
+
+ENTRYPOINT ["/opt/opentsdb/console-start-opentsdb.sh"]
