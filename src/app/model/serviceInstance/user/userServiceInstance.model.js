@@ -112,6 +112,7 @@
       var cfInfoApi = this.apiManager.retrieve('cloud-foundry.api.Info');
       var hceInfoApi = this.apiManager.retrieve('cloud-foundry.api.HceInfoApi');
       var hsmApi = this.apiManager.retrieve('service-manager.api.HsmApi');
+      var hcpApi = this.apiManager.retrieve('control-plane.api.HcpApi');
 
       return serviceInstanceApi.list().then(function (response) {
         var items = response.data;
@@ -120,6 +121,7 @@
         var hcfCfg = {headers: {'x-cnap-cnsi-list': hcfGuids.join(',')}};
         var hceGuids = _.map(_.filter(items, {cnsi_type: 'hce'}) || [], 'guid') || [];
         var hsmGuids = _.map(_.filter(items, {cnsi_type: 'hsm'}) || [], 'guid') || [];
+        var hcpGuids = _.map(_.filter(items, {cnsi_type: 'hcp'}) || [], 'guid') || [];
 
         var tasks = [];
         // make a request on each service type to refresh the oauth token
@@ -133,6 +135,10 @@
         }
         if (hsmGuids.length > 0) {
           tasks.push(hsmApi.info(hsmGuids.join(',')));
+        }
+
+        if (hcpGuids.length > 0) {
+          tasks.push(hcpApi.info(hcpGuids.join(',')));
         }
 
         if (tasks.length === 0) {
