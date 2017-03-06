@@ -66,7 +66,9 @@
         showLegend: this.noLegend !== 'true',
         dispatch: {
           renderEnd: function () {
-            that._addTitle();
+            if (that.value) {
+              that._addTitle();
+            }
           }
         },
         x: function (d) {
@@ -144,6 +146,7 @@
           color: idleColor || idleElement.color,
           idle: true
         }];
+      this.chartApi && this.chartApi.refresh();
     },
 
     _addTitle: function () {
