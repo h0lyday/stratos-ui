@@ -137,12 +137,13 @@
                 that.nodes[key].metrics.upTimeValue = metrics[4];
                 that.nodes[key].metrics.availabilityZone = metrics[5];
                 that.nodes[key].metrics.dataTx = utilsService.bytesToHumanSize(metrics[6]) + '/s';
-                that.nodes[key].metrics.dataTxValue =metrics[6];
+                that.nodes[key].metrics.dataTxValue = metrics[6];
                 that.nodes[key].metrics.dataRx = utilsService.bytesToHumanSize(metrics[7]) + '/s';
                 that.nodes[key].metrics.dataRxValue = metrics[7];
               });
 
-            allMetricPromises.push(promises);
+            // Catch local failure, so that the entire chain isn't disrupted
+            allMetricPromises.push(promises.catch(_.noop));
 
           });
           return allMetricPromises;
