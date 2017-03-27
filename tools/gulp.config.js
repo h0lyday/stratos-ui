@@ -27,7 +27,7 @@
         ignorePath: '../src/',
         exclude: [/.js$/, 'jquery.js'],
         overrides: {
-          'angular-link-header-parser': {
+          'angular-link-header-parser-angular-1.5': {
             main: ['release/angular-link-header-parser.min.js']
           },
           'angular-toastr': {
