@@ -106,10 +106,10 @@
           dispatch: {
             renderEnd: function () {
               var id = '#' + that.metricName + '_' + metricsDataService.getNodeName(that.nodeName) + '_cchart';
-              var selectedElement = d3.select(id + ' svg');
-              if (selectedElement.length > 0 && selectedElement[0][0]) {
-                var width = parseInt(selectedElement.style('width').replace(/px/, ''), 10) - 105;
-                var yAxis = d3.select(id + ' svg .nv-y');
+              var selectedElements = d3.selectAll(id + ' svg');
+              if (selectedElements.length > 0 && selectedElements[0][0]) {
+                var width = parseInt(selectedElements.style('width').replace(/px/, ''), 10) - 105;
+                var yAxis = d3.selectAll(id + ' svg .nv-y');
                 yAxis.attr('transform', 'translate(' + width + ',0)');
               }
 

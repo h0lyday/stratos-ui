@@ -46,9 +46,10 @@
           _.each(nodes, function (node) {
             if (node.spec.hostname === '192.168.200.2') {
               node.spec.hostname = 'kubernetes-master';
+              node.spec.metricsNodeName = 'kubernetes-master';
             }
             if (node.spec.hostname === '192.168.200.3') {
-              node.spec.hostname = 'kubernetes-node';
+              node.spec.metricsNodeName = 'kubernetes-node';
             }
           });
 

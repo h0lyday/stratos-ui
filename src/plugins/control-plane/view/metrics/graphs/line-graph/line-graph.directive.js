@@ -84,10 +84,10 @@
           dispatch: {
             renderEnd: function () {
               var elementName = '#' + that.metric + '_' + that.utilsService.sanitizeString(that.nodeName);
-              var selectedElement = d3.select(elementName + ' svg');
-              if (selectedElement.length > 0 && selectedElement[0][0]) {
-                var width = parseInt(selectedElement.style('width').replace(/px/, ''), 10) - 80;
-                var yAxis = d3.select(elementName + ' svg .nv-y');
+              var selectedElements = d3.selectAll(elementName + ' svg');
+              if (selectedElements.length > 0 && selectedElements[0][0]) {
+                var width = parseInt(selectedElements.style('width').replace(/px/, ''), 10) - 80;
+                var yAxis = d3.selectAll(elementName + ' svg .nv-y');
                 yAxis.attr('transform', 'translate(' + width + ',0)');
               }
 
