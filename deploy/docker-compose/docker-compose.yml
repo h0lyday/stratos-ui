@@ -31,4 +31,7 @@ services:
     extends:
       file: ../common.yml
       service: uaa
-
+networks:
+  default:
+    external:
+      name: shared_nw

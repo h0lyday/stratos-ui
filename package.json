@@ -22,8 +22,7 @@
     "update-webdriver": "webdriver-manager update",
     "watch": "gulp watch",
     "watch:test": "karma start tools/karma.conf.js",
-    "list-e2e": "node ./test/e2e/list-tests.js ./build/protractor.conf.js"
-  },
+    "list-e2e": "node ./test/e2e/list-tests.js ./build/protractor.conf.js"},
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
@@ -56,7 +55,9 @@
     "q": "^1.4.1",
     "run-sequence": "^1.1.5",
     "through": "^2.3.8",
-    "wiredep": "^3.0.0"
+    "wiredep": "^3.0.0",
+    "express": "^4.14.0"
+
   },
   "engines": {
     "node": "6.10.x"
@@ -65,7 +66,6 @@
     "browser-sync": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-plugin-angular": "^1.4.1",
-    "express": "^4.14.0",
     "gulp-eslint": "^3.0.1",
     "gulp-istanbul": "^1.1.1",
     "http-proxy": "^1.15.1",

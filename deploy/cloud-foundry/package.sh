@@ -24,24 +24,14 @@ EOF
 # Delete endpoints-dashboard from bower.json
 sed -i '/"endpoints-dashboard.*/d' bower.json
 
-npm install -g gulp bower
+npm install -g gulp
 
 cd ${TOP_LEVEL}
 
-npm install & NPM_INSTALL=$!
-${BOWER_PATH}/bower install & BOWER_INSTALL=$!
-
-wait ${NPM_INSTALL}
-npm run build-backend & BK_BUILD=$!
-
-wait ${BOWER_INSTALL}
-npm run build & UI_BUILD=$!
-
-wait ${BK_BUILD}
-wait ${UI_BUILD}
-npm run build-cf
+npm install
+npm run build-backend
+npm run deploy-cf
 
 chmod +x portal-proxy
-
 ./portal-proxy
 
