@@ -29,7 +29,7 @@ run:
       sleep 60
       netstat
       /usr/bin/bosh alias-env vbox -e 192.168.50.4 --ca-cert ./ca.crt 
-      bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent?v=3421.9 --sha1 1396d7877204e630b9e77ae680f492d26607461d
+      /usr/bin/bosh  -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent?v=3421.9 --sha1 1396d7877204e630b9e77ae680f492d26607461d
       cd stratos-ui
       cd stratos-ui-release
       /usr/bin/bosh create-release
