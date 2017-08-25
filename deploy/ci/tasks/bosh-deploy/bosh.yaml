@@ -19,8 +19,9 @@ run:
       curl https://s3.amazonaws.com/bosh-cli-artifacts/bosh-cli-2.0.28-linux-amd64 > bosh
       chmod +x bosh
       mv bosh /usr/bin/bosh
-      ip link
-      ifconfig wmogpnlj33vf-1:1 192.168.50.4
+      INTERFACE_NAME=$(ip link | grep 2125| cut -d':' -f2 | cut -d'@' -f1 |  sed -e 's/^ //')
+
+      ifconfig $INTERFACE_NAME:1 192.168.50.4
       ifconfig
       export BOSH_CLIENT=admin
       export BOSH_CLIENT_SECRET=admin 
