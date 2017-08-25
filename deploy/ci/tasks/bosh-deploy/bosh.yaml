@@ -19,8 +19,9 @@ run:
       curl https://s3.amazonaws.com/bosh-cli-artifacts/bosh-cli-2.0.28-linux-amd64 > bosh
       chmod +x bosh
       mv bosh /usr/bin/bosh
-      INTERFACE_NAME=$(ip link | grep 10699| cut -d':' -f2 | cut -d'@' -f1 |  sed -e 's/^ //')
+      INTERFACE_NAME=$(ifconfig | grep wmo | cut -d' ' -f1)
       ifconfig
+      echo "Interface name: $INTERFACE_NAME"
       ifconfig $INTERFACE_NAME:1 192.168.50.4
       ifconfig
       export BOSH_CLIENT=admin
