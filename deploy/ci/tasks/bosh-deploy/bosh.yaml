@@ -15,8 +15,6 @@ run:
     - -exc
     - |
       /usr/bin/start-bosh & 
-      apt-get update
-      apt-get install git
       curl https://raw.githubusercontent.com/cloudfoundry/bosh-lite/master/ca/certs/ca.crt > ca.crt
       curl https://s3.amazonaws.com/bosh-cli-artifacts/bosh-cli-2.0.28-linux-amd64 > bosh
       chmod +x bosh
