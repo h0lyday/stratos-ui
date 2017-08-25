@@ -1,0 +1,18 @@
+resources:
+- name: stratos-ui
+  type: git
+  source:
+    repo: SUSE/stratos-ui
+    uri: git@github.com:suse/stratos-ui.git
+    private_key: {{github-private-key}}
+    branch: bosh-concourse
+
+jobs:
+- name: deploy-bosh-lite
+  plan:
+  - get: stratos-ui
+  - do:
+    - task: build
+      privileged: true
+      timeout: 30m
+      file: stratos-ui/deploy/ci/tasks/bosh-deploy/bosh.yaml

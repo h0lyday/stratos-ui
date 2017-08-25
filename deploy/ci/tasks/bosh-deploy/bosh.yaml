@@ -1,0 +1,35 @@
+---
+platform: linux
+inputs:
+- name: stratos-ui
+image_resource:
+  type: docker-image
+  source:
+   repository:  ci-registry.ngrok.io:80/bosh-lite
+   tag: "latest"
+   insecure_registries: [ "ci-registry.ngrok.io:80" ]
+
+run:
+  path: sh
+  args:
+    - -exc
+    - |
+      /usr/bin/start-bosh & 
+      apt-get update
+      apt-get install git
+      curl https://raw.githubusercontent.com/cloudfoundry/bosh-lite/master/ca/certs/ca.crt > ca.crt
+      curl https://s3.amazonaws.com/bosh-cli-artifacts/bosh-cli-2.0.28-linux-amd64 > bosh
+      chmod +x bosh
+      mv bosh /usr/bin/bosh
+
+      ifconfig eth0:1 192.168.50.4
+      export BOSH_CLIENT=admin
+      export BOSH_CLIENT_SECRET=admin 
+
+      bosh alias-env vbox -e 192.168.50.4 --ca-cert ./ca.crt 
+      bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent?v=3421.9 --sha1 1396d7877204e630b9e77ae680f492d26607461d
+      cd stratos-ui
+      cd stratos-ui-release
+      bosh create-release
+      bosh -e vbox upload-release -d stratos-ui
+      bosh -e vbox -d stratos-ui deploy bosh-lite/deployment.yml
