@@ -20,7 +20,7 @@ run:
       chmod +x bosh
       mv bosh /usr/bin/bosh
       INTERFACE_NAME=$(ip link | grep 10699| cut -d':' -f2 | cut -d'@' -f1 |  sed -e 's/^ //')
-
+      ifconfig
       ifconfig $INTERFACE_NAME:1 192.168.50.4
       ifconfig
       export BOSH_CLIENT=admin
