@@ -27,6 +27,6 @@ run:
       bosh -e vbox upload-stemcell https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-trusty-go_agent?v=3421.9 --sha1 1396d7877204e630b9e77ae680f492d26607461d
       cd stratos-ui
       cd stratos-ui-release
-      bosh create-release
-      bosh -e vbox upload-release -d stratos-ui
-      bosh -e vbox -d stratos-ui deploy bosh-lite/deployment.yml
+      /usr/bin/bosh create-release
+      /usr/bin/bosh -e vbox upload-release -d stratos-ui
+      /usr/bin/bosh -e vbox -d stratos-ui deploy bosh-lite/deployment.yml
