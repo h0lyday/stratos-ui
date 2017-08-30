@@ -98,23 +98,7 @@
   function languageServiceFactory($q, $log, $translate, frameworkAsyncTaskDialog, modelManager, appLocalStorage) {
 
     var userPreference = appLocalStorage.getItem(localeStorageId);
-
-    // Determine if there is only one locale which the user should always use
-    var locales = _getLocales();
-    if (locales.length === 1) {
-      $log.debug('Only 1 locale found, setting to preferred + fallback: ', locales[0]);
-      // Attempt to set the fallback + preferred
-      $translate.preferredLanguage(locales[0]);
-      $translate.useFallbackLanguage(locales[0]);
-      // Ensure that the user pref is this one. This avoids instances where older, unsupported locales have not been
-      // cleared out of the source tree
-      userPreference = locales[0];
-    }
-
-    // Ensure that the locale is set to the user's pref (or forced to the only locale)
-    _setLocale({
-      currentLocale: userPreference
-    });
+    var initialised = $translate.onReady().then(init);
 
     var service = {
       /**
@@ -123,22 +107,24 @@
        * @returns {boolean} true if the language can be selected
        */
       enableLanguageSelection: enableLanguageSelection,
+
       /**
        * @name showLanguageSelection
        * @description Display Language Selection Dialog
        * @returns {*} frameworkAsyncTaskDialog
        */
       showLanguageSelection: showLanguageSelection,
+
       /**
-       * @name getCurrent
-       * @description Gets the current language
-       * @returns {string} the current language
+       * @name getLocaleLocalised
+       * @description Gets the current localised locale
+       * @returns {string} the current localised locale
        */
-      getCurrent: getCurrent,
+      getLocaleLocalised: getLocaleLocalised,
 
       /**
        * @name getAll
-       * @description Get all languages
+       * @description Get all supported languages
        * @returns {array} collection of languages with an object for each containing name and label
        */
       getAll: getAll,
@@ -146,23 +132,53 @@
       /**
        * @name setLocale
        * @description Set the locale
+       * @param (string) locale - locale string
        */
-      setLocale: setLocale
-    };
+      setLocale: setLocale,
 
-    if (enableLanguageSelection()) {
-      var userNavModel = modelManager.retrieve('app.model.navigation').user;
-      var item = userNavModel.addMenuItemFunction('select-language', service.showLanguageSelection, 'menu.language', 2);
-      item.setTextValues(function () {
-        return { current: service.getCurrent() };
-      });
-    }
+      /**
+       * @name getLocale
+       * @description Get the locale
+       * @param (boolean) waitForSet - true if the call should wait for any previous setLocale calls to complete before
+       * fetching, false to fetch immediately
+       * @returns {string|object} If waitForSet is true returns promise containing locale, else locale
+       */
+      getLocale: getLocale,
+
+      /**
+       * @name initialised
+       * @description Promise resolving when language service has been initialised
+       */
+      initialised: initialised
+    };
 
     return service;
 
-    function _setLocale(data) {
-      var locale = data.currentLocale;
-      return setLocale(locale);
+    function init() {
+      // Determine if there is only one locale which the user should always use
+      var locales = _getLocales();
+      if (locales.length === 1) {
+        $log.debug('Only 1 locale found, setting to preferred + fallback: ', locales[0]);
+        // Attempt to set the fallback + preferred
+        $translate.preferredLanguage(locales[0]);
+        $translate.useFallbackLanguage(locales[0]);
+        // Ensure that the user pref is this one. This avoids instances where older, unsupported locales have not been
+        // cleared out of the source tree
+        userPreference = locales[0];
+      }
+
+      // Ensure that the locale is set to the user's pref (or forced to the only locale)
+      var setPromise = setLocale(userPreference);
+
+      if (enableLanguageSelection()) {
+        var userNavModel = modelManager.retrieve('app.model.navigation').user;
+        var item = userNavModel.addMenuItemFunction('select-language', service.showLanguageSelection, 'menu.language', 2);
+        item.setTextValues(function () {
+          return { current: service.getLocaleLocalised() };
+        });
+      }
+
+      return setPromise;
     }
 
     function setLocale(locale) {
@@ -197,6 +213,10 @@
         $log.warn("Failed to load language for locale '" + locale + "', falling back to '" + $translate.use() + "'");
         return $q.reject(reason);
       });
+    }
+
+    function getLocale() {
+      return $translate.use();
     }
 
     function getAll() {
@@ -237,12 +257,15 @@
             currentLocale: $translate.use()
           }
         },
-        _setLocale
+        function (data) {
+          var locale = data.currentLocale;
+          return setLocale(locale);
+        }
       );
     }
 
-    function getCurrent() {
-      return $translate.instant('locales.' + $translate.use());
+    function getLocaleLocalised() {
+      return $translate.instant('locales.' + getLocale(false));
     }
   }
 
