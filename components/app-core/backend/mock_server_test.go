@@ -182,8 +182,8 @@ func expectTokenRow() sqlmock.Rows {
 func expectEncryptedTokenRow(mockEncryptionKey []byte) sqlmock.Rows {
 
 	encryptedUaaToken, _ := crypto.EncryptToken(mockEncryptionKey, mockUAAToken)
-	return sqlmock.NewRows([]string{"auth_token", "refresh_token", "token_expiry"}).
-		AddRow(encryptedUaaToken, encryptedUaaToken, mockTokenExpiry)
+	return sqlmock.NewRows([]string{"auth_token", "refresh_token", "token_expiry", "disconnected"}).
+		AddRow(encryptedUaaToken, encryptedUaaToken, mockTokenExpiry, false)
 }
 
 func setupHTTPTest(req *http.Request) (*httptest.ResponseRecorder, *echo.Echo, echo.Context, *portalProxy, *sql.DB, sqlmock.Sqlmock) {
